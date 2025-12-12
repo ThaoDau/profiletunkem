@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tún Kem - Đại lý chuyên cung cấp Myviettel VNPT</title>
+    <title>Dịch Vụ MyViettel & VNPT</title>
     <style>
         * {
             margin: 0;
@@ -451,7 +451,7 @@
             padding: 30px;
             margin: 25px 0;
             text-align: center;
-            animation: fadeInUp 0.8s ease-out 1.2s both;
+            animation: fadeInUp 0.8s ease-out 1.5s both;
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.5);
@@ -534,6 +534,158 @@
             z-index: 1;
         }
 
+        /* Proof Section */
+        .proof-section {
+            margin: 25px 0;
+            animation: fadeInUp 0.8s ease-out 1.2s both;
+            position: relative;
+        }
+
+        .proof-title {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #E30613, #0066CC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .proof-container {
+            position: relative;
+            padding: 0 50px;
+        }
+
+        .proof-grid {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 5px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(227, 6, 19, 0.5) rgba(255, 255, 255, 0.2);
+        }
+
+        .proof-grid::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .proof-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .proof-grid::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #E30613, #0066CC);
+            border-radius: 10px;
+        }
+
+        .proof-grid::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #ff1a2e, #0077ff);
+        }
+
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF6B35, #F7931E, #FDC830);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.5);
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .scroll-button:hover {
+            transform: translateY(-50%) scale(1.15);
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.7);
+            background: linear-gradient(135deg, #FF8C42, #FFA94D, #FFD93D);
+        }
+
+        .scroll-button:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .scroll-left {
+            left: 0;
+        }
+
+        .scroll-right {
+            right: 0;
+        }
+
+        .scroll-button.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .proof-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            cursor: pointer;
+            flex: 0 0 200px;
+            height: 280px;
+        }
+
+        .proof-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(227, 6, 19, 0.3);
+        }
+
+        .proof-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .proof-card:hover .proof-image {
+            transform: scale(1.1);
+        }
+
+        .proof-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(227, 6, 19, 0.8), rgba(0, 102, 204, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .proof-card:hover .proof-overlay {
+            opacity: 1;
+        }
+
+        .proof-icon {
+            font-size: 48px;
+            color: white;
+            transform: scale(0);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .proof-card:hover .proof-icon {
+            transform: scale(1);
+        }
+
         @media (max-width: 600px) {
             .name { font-size: 26px; }
             .title { font-size: 16px; }
@@ -542,6 +694,9 @@
             .contact-methods { flex-direction: column; }
             .contact-item { width: 100%; justify-content: center; }
             .profile-image { width: 120px; height: 120px; }
+            .proof-container { padding: 0 40px; }
+            .proof-card { flex: 0 0 160px; height: 220px; }
+            .scroll-button { width: 35px; height: 35px; font-size: 18px; }
         }
     </style>
 </head>
@@ -550,10 +705,10 @@
         <section class="hero">
             <div class="profile-image">
                 <div class="profile-image-inner">
-                    <img src="557631617_677008262113757_4748435919959418400_n.jpg" alt="Profile">
+                    <img src="logo ảnh.jpg" alt="Profile">
                 </div>
             </div>
-            <h1 class="name">Tún kem - Linh Sói</h1>
+            <h1 class="name">Dịch Vụ Viễn Thông</h1>
             <p class="title">Đại Lý Ủy Quyền MyViettel & VNPT</p>
             
             <div class="partner-logos">
@@ -571,6 +726,7 @@
             <ul class="info-list">
                 <li>Đăng ký và hỗ trợ MyViettel</li>
                 <li>Đăng ký dịch vụ VNPT</li>
+                <li>Internet và truyền hình</li>
                 <li>Hỗ trợ khách hàng 24/7</li>
             </ul>
         </div>
@@ -579,17 +735,17 @@
             <div class="service-card">
                 <div class="service-icon">📱</div>
                 <h3 class="service-title">MyViettel</h3>
-                <p class="service-description">Đăng ký thông tin</p>
+                <p class="service-description">Đăng ký & tư vấn gói cước ưu đãi nhất</p>
             </div>
             <div class="service-card">
                 <div class="service-icon">🌐</div>
                 <h3 class="service-title">VNPT</h3>
-                <p class="service-description">Đăng ký thông tin</p>
+                <p class="service-description">Internet & truyền hình cao cấp</p>
             </div>
             <div class="service-card">
                 <div class="service-icon">⚡</div>
                 <h3 class="service-title">Dịch Vụ Khác</h3>
-                <p class="service-description">Các job khác</p>
+                <p class="service-description">Sim số đẹp & chuyển mạng</p>
             </div>
         </section>
 
@@ -606,13 +762,62 @@
             </div>
         </section>
 
+        <section class="proof-section">
+            <h2 class="proof-title">💼 Bill Minh Chứng</h2>
+            <div class="proof-container">
+                <button class="scroll-button scroll-left" onclick="scrollProof('left')">◀</button>
+                <div class="proof-grid" id="proofGrid">
+                    <div class="proof-card">
+                        <img src="watermarked_z7287529292790_21c2a6cb1636fafd706708fa5cd73476.jpg" alt="Bill 1" class="proof-image">
+                        <div class="proof-overlay">
+                            <span class="proof-icon">🔍</span>
+                        </div>
+                    </div>
+                    <div class="proof-card">
+                        <img src="watermarked_z7287529327908_d5f9a860f782387cc6663f4e83465491.jpg" alt="Bill 2" class="proof-image">
+                        <div class="proof-overlay">
+                            <span class="proof-icon">🔍</span>
+                        </div>
+                    </div>
+                    <div class="proof-card">
+                        <img src="watermarked_z7287529355347_dc7fcf24403baf48e015296d94c99e47.jpg" alt="Bill 3" class="proof-image">
+                        <div class="proof-overlay">
+                            <span class="proof-icon">🔍</span>
+                        </div>
+                    </div>
+                    <div class="proof-card">
+                        <img src="watermarked_z7287529356646_23ca4657f4e9ec11506a3c3ef4bb202f.jpg" alt="Bill 4" class="proof-image">
+                        <div class="proof-overlay">
+                            <span class="proof-icon">🔍</span>
+                        </div>
+                    </div>
+                    <div class="proof-card">
+                        <img src="watermarked_z7287529372710_6be7704adf6413a21a3961a9a883cd50.jpg" alt="Bill 5" class="proof-image">
+                        <div class="proof-overlay">
+                            <span class="proof-icon">🔍</span>
+                        </div>
+                    </div>
+                    <div class="proof-card">
+                        <img src="watermarked_z7287529401285_d83436244337e40abde8843f1ef263d9.jpg" alt="Bill 6" class="proof-image">
+                        <div class="proof-overlay">
+                            <span class="proof-icon">🔍</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="scroll-button scroll-right" onclick="scrollProof('right')">▶</button>
+            </div>
+        </section>
+
         <section class="contact-section">
             <h2 class="contact-title">Liên Hệ Ngay</h2>
             <div class="contact-methods">
-                <a href="https://zalo.me/g/mmhkyu082" class="contact-item">
+                <a href="tel:+84123456789" class="contact-item">
+                    <span>📞</span> 0123 456 789
+                </a>
+                <a href="https://zalo.me/0123456789" class="contact-item">
                     <span>💬</span> Chat Zalo
                 </a>
-                <a href="https://www.facebook.com/linh.linh.97408?locale=vi_VN" class="contact-item">
+                <a href="https://facebook.com/yourpage" class="contact-item">
                     <span>📘</span> Facebook
                 </a>
             </div>
@@ -652,6 +857,44 @@
 
         const statsSection = document.querySelector('.stats');
         if (statsSection) observer.observe(statsSection);
+
+        // Scroll proof bills
+        function scrollProof(direction) {
+            const grid = document.getElementById('proofGrid');
+            const scrollAmount = 220;
+            
+            if (direction === 'left') {
+                grid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                grid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // Update scroll buttons visibility
+        function updateScrollButtons() {
+            const grid = document.getElementById('proofGrid');
+            const leftBtn = document.querySelector('.scroll-left');
+            const rightBtn = document.querySelector('.scroll-right');
+            
+            if (grid.scrollLeft <= 0) {
+                leftBtn.classList.add('hidden');
+            } else {
+                leftBtn.classList.remove('hidden');
+            }
+            
+            if (grid.scrollLeft >= grid.scrollWidth - grid.clientWidth - 10) {
+                rightBtn.classList.add('hidden');
+            } else {
+                rightBtn.classList.remove('hidden');
+            }
+        }
+
+        const proofGrid = document.getElementById('proofGrid');
+        if (proofGrid) {
+            proofGrid.addEventListener('scroll', updateScrollButtons);
+            window.addEventListener('resize', updateScrollButtons);
+            setTimeout(updateScrollButtons, 100);
+        }
     </script>
 </body>
 </html>
