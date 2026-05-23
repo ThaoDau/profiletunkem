@@ -1,23 +1,12 @@
 {
-  "version": 2,
-  "builds": [
+  "rewrites": [
     {
-      "src": "serve_portfolio.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/config",
-      "dest": "serve_portfolio.js"
+      "source": "/api/config",
+      "destination": "/api/serve"
     },
     {
-      "src": "/api/upload",
-      "dest": "serve_portfolio.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/api/upload",
+      "destination": "/api/serve"
     }
   ]
 }
