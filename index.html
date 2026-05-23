@@ -1842,12 +1842,61 @@
             }
             .eco-container {
                 grid-template-columns: 1fr;
+                padding: 20px;
+                gap: 24px;
+                border-radius: 16px;
+                box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            }
+            .eco-tabs {
+                flex-direction: row !important;
+                overflow-x: auto !important;
+                white-space: nowrap !important;
+                padding-bottom: 12px;
+                gap: 12px !important;
+                width: 100%;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .eco-tabs::-webkit-scrollbar {
+                display: none;
+            }
+            .eco-tab-button {
+                flex: 0 0 auto !important;
+                padding: 12px 18px !important;
+                border-radius: 12px !important;
+                gap: 10px !important;
+                transform: none !important;
+            }
+            .eco-tab-button:hover {
+                transform: none !important;
+                background: var(--subtle-bg-hover) !important;
+            }
+            .eco-tab-button.active {
+                background: rgba(255, 59, 92, 0.08) !important;
+            }
+            .eco-tab-icon {
+                width: 36px !important;
+                height: 36px !important;
+                font-size: 14px !important;
+                border-radius: 8px !important;
+            }
+            .eco-tab-info {
+                display: flex;
+                flex-direction: column;
+            }
+            .eco-tab-info h3 {
+                font-size: 13px !important;
+                margin-bottom: 0 !important;
+            }
+            .eco-tab-info p {
+                display: none !important;
             }
             .eco-content {
                 border-left: none;
                 border-top: 1px solid var(--glass-border);
                 padding-left: 0;
-                padding-top: 40px;
+                padding-top: 24px;
             }
             .sim-grid {
                 grid-template-columns: 1fr;
@@ -1876,6 +1925,41 @@
             }
             .proof-carousel-wrapper {
                 padding: 0;
+            }
+            /* Ecosystem simulator responsive styles */
+            .eco-media-slider {
+                margin-top: 16px !important;
+                aspect-ratio: 16 / 10 !important;
+            }
+            .eco-pane-title {
+                font-size: 20px !important;
+            }
+            .eco-pane-desc {
+                font-size: 14px !important;
+                line-height: 1.6 !important;
+            }
+            .eco-features-list li {
+                font-size: 13px !important;
+                margin-bottom: 8px !important;
+            }
+            .sim-dashboard-container {
+                padding: 16px !important;
+                min-height: auto !important;
+                gap: 12px !important;
+            }
+            .sim-stat-val {
+                font-size: 18px !important;
+            }
+            .sim-log-terminal {
+                height: 140px !important;
+            }
+            .sim-list-row {
+                padding: 6px 10px !important;
+                font-size: 10px !important;
+            }
+            .role-pill-btn {
+                padding: 4px 8px !important;
+                font-size: 9px !important;
             }
         }
 
@@ -3148,6 +3232,9 @@
             // Add active class to clicked button and target pane
             event.currentTarget.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+
+            // Auto scroll active tab button into view horizontally on mobile
+            event.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
 
         // SIM Testing Simulator Sandbox
