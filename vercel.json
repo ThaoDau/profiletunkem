@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "serve_portfolio.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/config",
+      "dest": "serve_portfolio.js"
+    },
+    {
+      "src": "/api/upload",
+      "dest": "serve_portfolio.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ]
+}

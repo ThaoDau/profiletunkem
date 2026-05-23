@@ -1,0 +1,12 @@
+# Dependecies
+node_modules/
+
+# Vercel Deployment
+.vercel/
+
+# OS/IDE junk files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log

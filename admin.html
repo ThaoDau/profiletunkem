@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TK SIM - BẢNG ĐIỀU KHIỂN QUẢN TRỊ</title>
+    
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #0B0F19;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-cyan: #00F0FF;
+            --accent-orange: #FF9E0B;
+            --accent-red: #FF3B5C;
+            --accent-green: #10B981;
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Be Vietnam Pro', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 59, 92, 0.04) 0%, transparent 40%);
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+
+        /* Header block */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 24px;
+        }
+
+        .admin-title-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .admin-title-box i {
+            font-size: 36px;
+            color: var(--accent-cyan);
+            filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.3));
+        }
+
+        .admin-title-box h1 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #FFF 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-cyan {
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, #00B0FF 100%);
+            color: #030712;
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+        }
+
+        .btn-cyan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 240, 255, 0.35);
+        }
+
+        .btn-dark {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-dark:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Grid sections */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+
+        @media (max-width: 992px) {
+            .admin-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-main);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 12px;
+        }
+
+        .card-title i {
+            color: var(--accent-orange);
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 14px;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.15);
+        }
+
+        /* Media Uploaders */
+        .uploader-box {
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.01);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .uploader-box:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 240, 255, 0.02);
+        }
+
+        .uploader-box i {
+            font-size: 32px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            transition: var(--transition);
+        }
+
+        .uploader-box:hover i {
+            color: var(--accent-cyan);
+        }
+
+        .uploader-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .uploader-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .uploader-file-input {
+            display: none;
+        }
+
+        /* Progress indicator */
+        .progress-container {
+            display: none;
+            margin-top: 12px;
+            text-align: left;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .progress-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan) 0%, #0084FF 100%);
+            border-radius: 3px;
+            transition: width 0.1s linear;
+        }
+
+        .progress-text {
+            font-size: 11px;
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        /* Asset previews */
+        .preview-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-top: 12px;
+        }
+
+        .preview-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+            background: #000;
+        }
+
+        .preview-video-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .preview-details {
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .preview-name {
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .preview-path {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-delete-asset {
+            background: none;
+            border: none;
+            color: var(--accent-red);
+            cursor: pointer;
+            padding: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .btn-delete-asset:hover {
+            transform: scale(1.1);
+        }
+
+        /* Alerts */
+        .alert {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .alert.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .alert-success {
+            background: var(--accent-green);
+            color: #030712;
+        }
+
+        .alert-error {
+            background: var(--accent-red);
+            color: #FFF;
+        }
+
+        /* Custom Edit Tab Buttons styling */
+        .tab-edit-btn:hover {
+            border-color: var(--accent-cyan) !important;
+            color: var(--text-main) !important;
+            background: rgba(0, 240, 255, 0.05) !important;
+        }
+        .tab-edit-btn.active {
+            box-shadow: 0 4px 15px rgba(0, 240, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        
+        <!-- Header -->
+        <header class="admin-header">
+            <div class="admin-title-box">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <div>
+                    <h1>TK SIM – HỆ THỐNG QUẢN TRỊ</h1>
+                    <p style="font-size: 12px; color: var(--text-muted);">Tùy chỉnh tiêu đề, mô tả và tải lên phương tiện truyền thông trực tiếp</p>
+                </div>
+            </div>
+            <div class="admin-actions">
+                <a href="/" target="_blank" class="btn btn-dark">
+                    <i class="fa-solid fa-globe"></i> Xem Website
+                </a>
+                <button onclick="saveConfig()" class="btn btn-cyan">
+                    <i class="fa-solid fa-floppy-disk"></i> Lưu Cấu Hình
+                </button>
+            </div>
+        </header>
+
+        <!-- Form Grid -->
+        <div class="admin-grid">
+            
+            <!-- Column 1: Main Content Text -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    Tùy Chỉnh Nội Dung Văn Bản
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="pageTitle">Tiêu Đề Trình Duyệt (Page Title)</label>
+                    <input type="text" id="pageTitle" class="form-input" placeholder="Ví dụ: TÚN KEM MEDIA - Hệ Sinh Thái SIM">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="heroTitle">Tiêu Đề Hero (Hỗ trợ HTML)</label>
+                    <input type="text" id="heroTitle" class="form-input" placeholder="TÚN KEM MEDIA <br> <span class='grad'>Giải Pháp SIM...</span>">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="heroDesc">Đoạn Mô Tả Hero (Hero Description)</label>
+                    <textarea id="heroDesc" class="form-textarea" rows="6" placeholder="Tiên phong trong hạ tầng quản lý kho số, kiểm tra SIM tự động..."></textarea>
+                </div>
+            </div>
+
+            <!-- Column 2: Media Assets Manager -->
+            <div class="card">
+                <div class="card-title">
+                    <i class="fa-solid fa-photo-film"></i>
+                    Quản Lý Media & Ảnh Đại Diện
+                </div>
+
+                <!-- 1. Avatar Uploader -->
+                <div class="form-group">
+                    <label class="form-label">Ảnh Đại Diện (Avatar Image)</label>
+                    <div class="uploader-box" onclick="triggerUpload('avatar')">
+                        <i class="fa-solid fa-user-ninja"></i>
+                        <div class="uploader-title">Kéo thả hoặc click để tải lên Avatar</div>
+                        <div class="uploader-desc">Hỗ trợ PNG, JPG, SVG. Khuyên dùng định dạng hình vuông.</div>
+                        <input type="file" id="avatarFileInput" class="uploader-file-input" accept="image/*" onchange="handleFileSelect(this, 'avatar')">
+                        
+                        <div class="progress-container" id="avatarProgress">
+                            <span class="progress-text">Đang tải lên... <span class="percent">0%</span></span>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+                        </div>
+                    </div>
+                    <div id="avatarPreviewContainer"></div>
+                </div>
+
+                <!-- 2. Video Promo Uploader -->
+                <div class="form-group">
+                    <label class="form-label">Video Giới Thiệu / Quảng Cáo (Promo Video)</label>
+                    <div class="uploader-box" onclick="triggerUpload('video')">
+                        <i class="fa-solid fa-circle-play"></i>
+                        <div class="uploader-title">Kéo thả hoặc click để tải lên Video</div>
+                        <div class="uploader-desc">Hỗ trợ MP4, WebM. Dung lượng tối đa khuyên dùng < 50MB.</div>
+                        <input type="file" id="videoFileInput" class="uploader-file-input" accept="video/*" onchange="handleFileSelect(this, 'video')">
+                        
+                        <div class="progress-container" id="videoProgress">
+                            <span class="progress-text">Đang tải lên... <span class="percent">0%</span></span>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+                        </div>
+                    </div>
+                    <div id="videoPreviewContainer"></div>
+                </div>
+
+                <!-- 3. SIM Illustration Uploader -->
+                <div class="form-group">
+                    <label class="form-label">Ảnh Minh Họa SIM (SIM Illustration)</label>
+                    <div class="uploader-box" onclick="triggerUpload('sim')">
+                        <i class="fa-solid fa-sim-card"></i>
+                        <div class="uploader-title">Kéo thả hoặc click để tải lên Ảnh SIM</div>
+                        <div class="uploader-desc">Hỗ trợ PNG, JPG, SVG làm ảnh nền minh họa.</div>
+                        <input type="file" id="simFileInput" class="uploader-file-input" accept="image/*" onchange="handleFileSelect(this, 'sim')">
+                        
+                        <div class="progress-container" id="simProgress">
+                            <span class="progress-text">Đang tải lên... <span class="percent">0%</span></span>
+                            <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
+                        </div>
+                    </div>
+                    <div id="simPreviewContainer"></div>
+                </div>
+
+        </div>
+
+        <!-- Tabs Customization Section -->
+        <div class="card" style="margin-top: 32px; grid-column: span 2; position: relative; z-index: 5;">
+            <div class="card-title">
+                <i class="fa-solid fa-network-wired" style="color: var(--accent-cyan);"></i>
+                Tùy Chỉnh Các Tab Hệ Sinh Thái (Ecosystem Tabs Editor)
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6;">
+                Hệ sinh thái của landing page gồm 5 tab cốt lõi. Hãy nhấp chọn tab bên dưới để cập nhật nội dung văn bản, tính năng nổi bật, và tải lên **nhiều hình ảnh hoặc video minh chứng** cho từng tab. Dữ liệu sẽ tự động được đồng bộ và tạo slide hiển thị chuyên nghiệp tại trang chủ.
+            </p>
+
+            <!-- Mini tab bar for admin editing -->
+            <div class="admin-tabs-bar" style="display: flex; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; margin-bottom: 24px; flex-wrap: wrap;">
+                <button type="button" class="tab-edit-btn active" onclick="switchEditTab('tab-1')" style="background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.3); color: var(--accent-cyan); font-family: var(--font-display); font-weight: 700; padding: 10px 16px; border-radius: 8px; cursor: pointer; transition: var(--transition);">Tab 1: Kiểm Tra Check Số</button>
+                <button type="button" class="tab-edit-btn" onclick="switchEditTab('tab-2')" style="background: transparent; border: 1px solid transparent; color: var(--text-muted); font-family: var(--font-display); font-weight: 700; padding: 10px 16px; border-radius: 8px; cursor: pointer; transition: var(--transition);">Tab 2: Kho Số</button>
+                <button type="button" class="tab-edit-btn" onclick="switchEditTab('tab-3')" style="background: transparent; border: 1px solid transparent; color: var(--text-muted); font-family: var(--font-display); font-weight: 700; padding: 10px 16px; border-radius: 8px; cursor: pointer; transition: var(--transition);">Tab 3: Quản Lý Số</button>
+                <button type="button" class="tab-edit-btn" onclick="switchEditTab('tab-4')" style="background: transparent; border: 1px solid transparent; color: var(--text-muted); font-family: var(--font-display); font-weight: 700; padding: 10px 16px; border-radius: 8px; cursor: pointer; transition: var(--transition);">Tab 4: Thống Kê</button>
+                <button type="button" class="tab-edit-btn" onclick="switchEditTab('tab-5')" style="background: transparent; border: 1px solid transparent; color: var(--text-muted); font-family: var(--font-display); font-weight: 700; padding: 10px 16px; border-radius: 8px; cursor: pointer; transition: var(--transition);">Tab 5: Đối Tác & Thanh Toán</button>
+            </div>
+
+            <!-- Editor container for active tab -->
+            <div id="tab-editor-content">
+                <!-- Tab editor will render here dynamically via Javascript -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Alert Box -->
+    <div id="alertBox" class="alert">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="alertMessage">Lưu cấu hình thành công!</span>
+    </div>
+
+    <script>
+        // Global asset paths
+        let activeAvatar = "";
+        let activeVideo = "";
+        let activeSim = "";
+        let activeTabs = [];
+        let activePayments = [];
+        let currentEditingTabId = 'tab-1';
+
+        // Load configuration on startup
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/config')
+                .then(r => r.json())
+                .then(config => {
+                    document.getElementById('pageTitle').value = config.pageTitle || "";
+                    document.getElementById('heroTitle').value = config.heroTitle || "";
+                    document.getElementById('heroDesc').value = config.heroDesc || "";
+                    
+                    if (config.avatarUrl) {
+                        setAssetPreview('avatar', config.avatarUrl);
+                    }
+                    if (config.promoVideoUrl) {
+                        setAssetPreview('video', config.promoVideoUrl);
+                    }
+                    if (config.simIllustrationUrl) {
+                        setAssetPreview('sim', config.simIllustrationUrl);
+                    }
+
+                    // Load ecosystem tabs
+                    activeTabs = config.tabs || [];
+                    activePayments = config.payments || [];
+                    
+                    // Render first tab
+                    renderEditTab('tab-1');
+                })
+                .catch(err => {
+                    showAlert("Lỗi khi tải cấu hình hiện tại!", true);
+                });
+        });
+
+        // Trigger native file dialogue
+        function triggerUpload(type) {
+            document.getElementById(`${type}FileInput`).click();
+        }
+
+        // Trigger multi uploader file dialogue
+        function triggerMultiUpload(tabId) {
+            document.getElementById('multiFileInput').click();
+        }
+
+        // Handle file selection and perform dynamic upload
+        function handleFileSelect(input, type) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const progressContainer = document.getElementById(`${type}Progress`);
+            const fill = progressContainer.querySelector('.progress-bar-fill');
+            const percentText = progressContainer.querySelector('.percent');
+            
+            progressContainer.style.display = 'block';
+            fill.style.width = '0%';
+            percentText.textContent = '0%';
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api/upload', true);
+            xhr.setRequestHeader('x-file-name', file.name);
+
+            xhr.upload.onprogress = (e) => {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    fill.style.width = `${percent}%`;
+                    percentText.textContent = `${percent}%`;
+                }
+            };
+
+            xhr.onload = () => {
+                progressContainer.style.display = 'none';
+                if (xhr.status === 200) {
+                    const res = JSON.parse(xhr.responseText);
+                    showAlert(`Đã tải lên tệp ${file.name} thành công!`);
+                    setAssetPreview(type, res.path);
+                } else {
+                    showAlert('Tải lên thất bại!', true);
+                }
+            };
+
+            xhr.onerror = () => {
+                progressContainer.style.display = 'none';
+                showAlert('Lỗi kết nối khi tải lên!', true);
+            };
+
+            xhr.send(file);
+        }
+
+        // Handle multi file select for tabs uploader
+        function handleMultiFileSelect(input, tabId) {
+            const files = Array.from(input.files);
+            if (files.length === 0) return;
+
+            const progressContainer = document.getElementById('multiProgress');
+            const fill = document.getElementById('multiBarFill');
+            const percentText = document.getElementById('multiPercent');
+            
+            progressContainer.style.display = 'block';
+            
+            function uploadNext(index) {
+                if (index >= files.length) {
+                    progressContainer.style.display = 'none';
+                    input.value = ''; // Reset input
+                    renderEditTab(tabId);
+                    showAlert(`Đã tải lên thành công ${files.length} tệp cho tab!`);
+                    return;
+                }
+
+                const file = files[index];
+                fill.style.width = '0%';
+                percentText.textContent = `[${index + 1}/${files.length}] 0%`;
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api/upload', true);
+                xhr.setRequestHeader('x-file-name', file.name);
+
+                xhr.upload.onprogress = (e) => {
+                    if (e.lengthComputable) {
+                        const percent = Math.round((e.loaded / e.total) * 100);
+                        fill.style.width = `${percent}%`;
+                        percentText.textContent = `[${index + 1}/${files.length}] ${percent}%`;
+                    }
+                };
+
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        const res = JSON.parse(xhr.responseText);
+                        const tabData = activeTabs.find(t => t.id === tabId);
+                        if (tabData) {
+                            if (!tabData.media) tabData.media = [];
+                            tabData.media.push(res.path);
+                        }
+                        uploadNext(index + 1);
+                    } else {
+                        showAlert(`Tải lên tệp thứ ${index + 1} thất bại!`, true);
+                        progressContainer.style.display = 'none';
+                    }
+                };
+
+                xhr.onerror = () => {
+                    progressContainer.style.display = 'none';
+                    showAlert('Lỗi kết nối máy chủ!', true);
+                };
+
+                xhr.send(file);
+            }
+
+            uploadNext(0);
+        }
+
+        // Set live preview card
+        function setAssetPreview(type, path) {
+            if (type === 'avatar') activeAvatar = path;
+            if (type === 'video') activeVideo = path;
+            if (type === 'sim') activeSim = path;
+
+            const container = document.getElementById(`${type}PreviewContainer`);
+            container.innerHTML = '';
+
+            const isVideo = path.endsWith('.mp4') || path.endsWith('.webm') || type === 'video';
+
+            const box = document.createElement('div');
+            box.className = 'preview-box';
+
+            if (isVideo) {
+                box.innerHTML = `
+                    <div class="preview-video-placeholder"><i class="fa-solid fa-film"></i></div>
+                    <div class="preview-details">
+                        <div class="preview-name">Video Giới Thiệu</div>
+                        <div class="preview-path">${path}</div>
+                    </div>
+                    <button class="btn-delete-asset" onclick="deleteAsset('${type}')" title="Xóa"><i class="fa-solid fa-trash-can"></i></button>
+                `;
+            } else {
+                box.innerHTML = `
+                    <img src="${path}" class="preview-img">
+                    <div class="preview-details">
+                        <div class="preview-name">${type === 'avatar' ? 'Ảnh đại diện' : 'Ảnh minh họa SIM'}</div>
+                        <div class="preview-path">${path}</div>
+                    </div>
+                    <button class="btn-delete-asset" onclick="deleteAsset('${type}')" title="Xóa"><i class="fa-solid fa-trash-can"></i></button>
+                `;
+            }
+
+            container.appendChild(box);
+        }
+
+        // Remove media asset binding
+        function deleteAsset(type) {
+            if (type === 'avatar') activeAvatar = "";
+            if (type === 'video') activeVideo = "";
+            if (type === 'sim') activeSim = "";
+            
+            document.getElementById(`${type}PreviewContainer`).innerHTML = '';
+            document.getElementById(`${type}FileInput`).value = '';
+            showAlert('Đã xóa liên kết tệp.');
+        }
+
+        // Switch custom editor tab
+        function switchEditTab(tabId) {
+            const btns = document.querySelectorAll('.tab-edit-btn');
+            btns.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = 'transparent';
+                btn.style.borderColor = 'transparent';
+                btn.style.color = 'var(--text-muted)';
+            });
+
+            // Find clicked button
+            const clickedBtn = Array.from(btns).find(btn => btn.getAttribute('onclick').includes(tabId));
+            if (clickedBtn) {
+                clickedBtn.classList.add('active');
+                clickedBtn.style.background = 'rgba(0, 240, 255, 0.1)';
+                clickedBtn.style.borderColor = 'rgba(0, 240, 255, 0.3)';
+                clickedBtn.style.color = 'var(--accent-cyan)';
+            }
+
+            renderEditTab(tabId);
+        }
+
+        // Render editor tab dynamic UI
+        function renderEditTab(tabId) {
+            currentEditingTabId = tabId;
+            const tabData = activeTabs.find(t => t.id === tabId);
+            if (!tabData) return;
+
+            const container = document.getElementById('tab-editor-content');
+            container.innerHTML = '';
+
+            // Title and subtitle edit
+            const rowTitle = document.createElement('div');
+            rowTitle.className = 'admin-grid';
+            rowTitle.style.gap = '20px';
+            rowTitle.style.marginBottom = '20px';
+
+            rowTitle.innerHTML = `
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label">Tiêu Đề Tab (Tab Title)</label>
+                    <input type="text" id="editTabTitle" class="form-input" value="${tabData.title || ''}" oninput="updateTabField('title', this.value)">
+                </div>
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label">Phụ Đề Tab (Tab Subtitle)</label>
+                    <input type="text" id="editTabSubtitle" class="form-input" value="${tabData.subtitle || ''}" oninput="updateTabField('subtitle', this.value)">
+                </div>
+            `;
+            container.appendChild(rowTitle);
+
+            // Description edit
+            const descGroup = document.createElement('div');
+            descGroup.className = 'form-group';
+            descGroup.innerHTML = `
+                <label class="form-label">Đoạn Mô Tả Tính Năng (Tab Description)</label>
+                <textarea id="editTabDesc" class="form-textarea" rows="4" oninput="updateTabField('desc', this.value)">${tabData.desc || ''}</textarea>
+            `;
+            container.appendChild(descGroup);
+
+            // Bullet features edit
+            const featuresGroup = document.createElement('div');
+            featuresGroup.className = 'form-group';
+            const featuresStr = (tabData.features || []).join('\n');
+            featuresGroup.innerHTML = `
+                <label class="form-label">Các Tính Năng Nổi Bật (Mỗi dòng một tính năng)</label>
+                <textarea id="editTabFeatures" class="form-textarea" rows="4" placeholder="Ví dụ:\nĐồng bộ hóa dữ liệu thời gian thực\nHỗ trợ API đa nhiệm..." oninput="updateTabFeatures(this.value)">${featuresStr}</textarea>
+            `;
+            container.appendChild(featuresGroup);
+
+            // Multiple Images/Videos Uploader Box
+            const uploaderGroup = document.createElement('div');
+            uploaderGroup.className = 'form-group';
+            uploaderGroup.innerHTML = `
+                <label class="form-label">Hình ảnh & Video Minh Chứng (Tải lên nhiều tệp)</label>
+                <div class="uploader-box" onclick="triggerMultiUpload('${tabId}')" style="margin-bottom: 16px;">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <div class="uploader-title">Kéo thả hoặc click để tải lên Ảnh/Video cho tab này</div>
+                    <div class="uploader-desc">Hỗ trợ định dạng PNG, JPG, JPEG, GIF, MP4, WebM. Có thể tải lên nhiều tệp để chạy slider.</div>
+                    <input type="file" id="multiFileInput" class="uploader-file-input" accept="image/*,video/*" multiple onchange="handleMultiFileSelect(this, '${tabId}')">
+                    
+                    <div class="progress-container" id="multiProgress" style="display: none;">
+                        <span class="progress-text">Đang tải lên... <span class="percent" id="multiPercent">0%</span></span>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" id="multiBarFill"></div></div>
+                    </div>
+                </div>
+                
+                <!-- Media Preview Grid -->
+                <div class="media-preview-title" style="font-size: 13px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-images" style="color: var(--accent-orange);"></i> Danh Sách Media Hiện Tại (${(tabData.media || []).length})
+                </div>
+                <div id="tabMediaGrid" class="admin-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                    <!-- Previews will display here -->
+                </div>
+            `;
+            container.appendChild(uploaderGroup);
+
+            // Render media preview grid
+            const mediaGrid = document.getElementById('tabMediaGrid');
+            const mediaList = tabData.media || [];
+            if (mediaList.length === 0) {
+                mediaGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); font-size: 13px; padding: 20px; border: 1px dashed var(--border-color); border-radius: 8px;">
+                        Chưa có hình ảnh hoặc video nào được tải lên cho tab này.
+                    </div>
+                `;
+            } else {
+                mediaList.forEach((mPath, mIdx) => {
+                    const isVideo = mPath.endsWith('.mp4') || mPath.endsWith('.webm');
+                    const previewCard = document.createElement('div');
+                    previewCard.className = 'preview-box';
+                    previewCard.style.margin = '0';
+                    previewCard.style.flexDirection = 'column';
+                    previewCard.style.alignItems = 'stretch';
+                    previewCard.style.gap = '10px';
+
+                    if (isVideo) {
+                        previewCard.innerHTML = `
+                            <div class="preview-video-placeholder" style="width: 100%; height: 100px;"><i class="fa-solid fa-film"></i></div>
+                            <div class="preview-details" style="padding: 0 4px;">
+                                <div class="preview-name" style="font-size: 12px; margin-bottom: 2px;">Video Minh Chứng</div>
+                                <div class="preview-path" style="font-size: 10px;">${mPath}</div>
+                            </div>
+                            <div style="display: flex; gap: 8px; justify-content: flex-end; padding: 0 4px;">
+                                <button type="button" class="btn-delete-asset" onclick="deleteTabMedia('${tabId}', ${mIdx})" style="padding: 4px; font-size: 14px;"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                            </div>
+                        `;
+                    } else {
+                        previewCard.innerHTML = `
+                            <img src="${mPath}" class="preview-img" style="width: 100%; height: 100px; border-radius: 6px;">
+                            <div class="preview-details" style="padding: 0 4px;">
+                                <div class="preview-name" style="font-size: 12px; margin-bottom: 2px;">Hình Ảnh Minh Họa</div>
+                                <div class="preview-path" style="font-size: 10px;">${mPath}</div>
+                            </div>
+                            <div style="display: flex; gap: 8px; justify-content: flex-end; padding: 0 4px;">
+                                <button type="button" class="btn-delete-asset" onclick="deleteTabMedia('${tabId}', ${mIdx})" style="padding: 4px; font-size: 14px;"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                            </div>
+                        `;
+                    }
+                    mediaGrid.appendChild(previewCard);
+                });
+            }
+
+            // Special ledger component for tab-5
+            if (tabId === 'tab-5') {
+                const paySection = document.createElement('div');
+                paySection.style.cssText = `
+                    margin-top: 32px;
+                    padding-top: 24px;
+                    border-top: 1px solid var(--border-color);
+                `;
+                paySection.innerHTML = `
+                    <div class="media-preview-title" style="font-size: 16px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-receipt"></i> Quản Lý Lịch Sử Thanh Toán Đối Tác (Đối Soát)
+                    </div>
+                    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">
+                        Lưu trữ các giao dịch thanh toán từ đối tác hoặc chi trả hoa hồng cho đối tác của bạn để làm minh chứng lịch sử hiển thị trên Landing Page.
+                    </p>
+
+                    <!-- Add transaction form -->
+                    <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-color); padding: 20px; border-radius: 12px; margin-bottom: 24px;">
+                        <h4 style="font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 16px;">Ghi nhận giao dịch mới</h4>
+                        <div class="admin-grid" style="grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label" style="font-size: 11px;">Tên Đối Tác / CTV</label>
+                                <input type="text" id="payPartner" class="form-input" placeholder="Ví dụ: Nguyễn Văn A (Đại lý)">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label" style="font-size: 11px;">Số tiền (VNĐ)</label>
+                                <input type="number" id="payAmount" class="form-input" placeholder="Ví dụ: 15000000">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label" style="font-size: 11px;">Thời gian giao dịch</label>
+                                <input type="text" id="payDate" class="form-input" placeholder="Ví dụ: 2026-05-23 03:00">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 16px;">
+                            <label class="form-label" style="font-size: 11px;">Nội dung giao dịch</label>
+                            <input type="text" id="payDesc" class="form-input" placeholder="Ví dụ: Đối tác thanh toán nạp ví API OTP tuần 3">
+                        </div>
+                        <button type="button" class="btn btn-cyan" onclick="addPaymentRecord()" style="padding: 8px 16px; font-size: 13px;">
+                            <i class="fa-solid fa-plus"></i> Ghi Nhận Giao Dịch
+                        </button>
+                    </div>
+
+                    <!-- Transactions list -->
+                    <div style="overflow-x: auto; border: 1px solid var(--border-color); border-radius: 8px;">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                            <thead>
+                                <tr style="background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border-color); color: var(--text-muted);">
+                                    <th style="padding: 12px 16px; font-weight: 600;">Đối tác</th>
+                                    <th style="padding: 12px 16px; font-weight: 600;">Số tiền</th>
+                                    <th style="padding: 12px 16px; font-weight: 600;">Thời gian</th>
+                                    <th style="padding: 12px 16px; font-weight: 600;">Nội dung</th>
+                                    <th style="padding: 12px 16px; text-align: right; font-weight: 600;">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminPaymentsTable">
+                                <!-- Payments rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+                container.appendChild(paySection);
+                renderPaymentsTable();
+            }
+        }
+
+        // Update tab single input field
+        function updateTabField(field, val) {
+            const tabData = activeTabs.find(t => t.id === currentEditingTabId);
+            if (tabData) {
+                tabData[field] = val;
+            }
+        }
+
+        // Update features array from newline separation
+        function updateTabFeatures(val) {
+            const tabData = activeTabs.find(t => t.id === currentEditingTabId);
+            if (tabData) {
+                tabData.features = val.split('\n').map(x => x.trim()).filter(x => x.length > 0);
+            }
+        }
+
+        // Delete uploaded media from tab list
+        function deleteTabMedia(tabId, idx) {
+            const tabData = activeTabs.find(t => t.id === tabId);
+            if (tabData && tabData.media) {
+                tabData.media.splice(idx, 1);
+                renderEditTab(tabId);
+                showAlert('Đã xóa tệp media khỏi tab này.');
+            }
+        }
+
+        // Add payment transaction history
+        function addPaymentRecord() {
+            const partner = document.getElementById('payPartner').value.trim();
+            const amount = parseFloat(document.getElementById('payAmount').value.trim());
+            const date = document.getElementById('payDate').value.trim();
+            const desc = document.getElementById('payDesc').value.trim();
+
+            if (!partner || isNaN(amount) || !date || !desc) {
+                showAlert('Vui lòng nhập đầy đủ các trường thông tin giao dịch!', true);
+                return;
+            }
+
+            const newRecord = {
+                id: 'pay-' + Date.now(),
+                partner,
+                amount,
+                date,
+                desc
+            };
+
+            activePayments.push(newRecord);
+            
+            // Clear inputs
+            document.getElementById('payPartner').value = '';
+            document.getElementById('payAmount').value = '';
+            document.getElementById('payDate').value = '';
+            document.getElementById('payDesc').value = '';
+
+            renderPaymentsTable();
+            showAlert('Đã ghi nhận thêm một giao dịch.');
+        }
+
+        // Remove payment transaction
+        function deletePaymentRecord(idx) {
+            activePayments.splice(idx, 1);
+            renderPaymentsTable();
+            showAlert('Đã xóa giao dịch lịch sử.');
+        }
+
+        // Render payments ledger table
+        function renderPaymentsTable() {
+            const tbody = document.getElementById('adminPaymentsTable');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            if (activePayments.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="padding: 20px; text-align: center; color: var(--text-muted);">Chưa có lịch sử giao dịch nào được ghi lại.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            activePayments.forEach((p, idx) => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid var(--border-color)';
+                tr.innerHTML = `
+                    <td style="padding: 12px 16px; font-weight: 600;">${p.partner}</td>
+                    <td style="padding: 12px 16px; color: var(--accent-cyan); font-weight: 700;">${p.amount.toLocaleString()}đ</td>
+                    <td style="padding: 12px 16px; color: var(--text-muted); font-size: 11px;">${p.date}</td>
+                    <td style="padding: 12px 16px; color: var(--text-muted); max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${p.desc}</td>
+                    <td style="padding: 12px 16px; text-align: right;">
+                        <button type="button" class="btn-delete-asset" onclick="deletePaymentRecord(${idx})" title="Xóa"><i class="fa-solid fa-trash-can"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Save entire configuration to disk (extended for dynamic tabs)
+        function saveConfig() {
+            const pageTitle = document.getElementById('pageTitle').value.trim();
+            const heroTitle = document.getElementById('heroTitle').value.trim();
+            const heroDesc = document.getElementById('heroDesc').value.trim();
+
+            if (!pageTitle || !heroTitle || !heroDesc) {
+                showAlert('Vui lòng điền đầy đủ các thông tin văn bản!', true);
+                return;
+            }
+
+            const data = {
+                pageTitle,
+                heroTitle,
+                heroDesc,
+                avatarUrl: activeAvatar,
+                promoVideoUrl: activeVideo,
+                simIllustrationUrl: activeSim,
+                tabs: activeTabs,
+                payments: activePayments
+            };
+
+            fetch('/api/config', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(r => r.json())
+            .then(res => {
+                if (res.success) {
+                    showAlert('Cấu hình đã được lưu và cập nhật trực tiếp lên trang chủ!');
+                } else {
+                    showAlert('Lỗi khi lưu cấu hình!', true);
+                }
+            })
+            .catch(err => {
+                showAlert('Lỗi kết nối máy chủ!', true);
+            });
+        }
+
+        // Custom notification alert
+        function showAlert(msg, isError = false) {
+            const box = document.getElementById('alertBox');
+            const messageEl = document.getElementById('alertMessage');
+            const icon = box.querySelector('i');
+
+            messageEl.textContent = msg;
+            
+            if (isError) {
+                box.className = 'alert alert-error';
+                icon.className = 'fa-solid fa-circle-exclamation';
+            } else {
+                box.className = 'alert alert-success';
+                icon.className = 'fa-solid fa-circle-check';
+            }
+
+            box.classList.add('show');
+            
+            setTimeout(() => {
+                box.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
